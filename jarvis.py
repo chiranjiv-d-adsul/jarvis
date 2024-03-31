@@ -7,8 +7,8 @@ import pyjokes
 
 listener = sr.Recognizer()
 engine = pyttsx3.init()
-voice = engine.getProperty('voices')
-engine.setProperty('voice', voice[0].id)
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)
 
 def talk(text):
     engine.say(text)
@@ -27,43 +27,46 @@ def take_command():
                 print(command)
     except:
         print("exit")
+        return ""
     return command
 
 def run_alexa():
     command = take_command()
     print(command)
-    while True:
-        if 'whatsapp ' in command:
-            pywhatkit.sendwhatmsg("+91 865 646466",
-                                  "fjdvjdfo sdjpjvfopv sdcjso dsfvojofdovj",
-                                  00, 23)
-        elif 'play' in command:
-            song = command.replace('play', '')
-            talk('playing' + song)
-            print(song)
-            pywhatkit.playonyt(song)
-        elif 'time' in command:
-            time = datetime.datetime.now().strftime('%I:%M %p')
-            print(time)
-            talk('current time is ' + time)
-        elif 'who is ' in command:
-            person = command.replace('who is', '')
-            info = wikipedia.summary(person, 1)
-            print(info)
-            talk(info)
-        elif 'joke' in command:
-            talk(pyjokes.get_joke())
-        elif 'go' in command:
-            talk("no, i will not go with you")
-        elif 'mad' in command:
-            talk("no, i am not, you are mad")
-        elif 'how' in command:
-            talk("i am fine, what about u")
-        else:
-            talk("please say the command again")
+    if 'whatsapp ' in command:
+        pywhatkit.sendwhatmsg("+91 865 646466",
+                              "fjdvjdfo sdjpjvfopv sdcjso dsfvojofdovj",
+                              00, 23)
+    elif 'play' in command:
+        song = command.replace('play', '')
+        talk('playing' + song)
+        print(song)
+        pywhatkit.playonyt(song)
+    elif 'time' in command:
+        time = datetime.datetime.now().strftime('%I:%M %p')
+        print(time)
+        talk('current time is ' + time)
+    elif 'who is ' in command:
+        person = command.replace('who is', '')
+        info = wikipedia.summary(person, 1)
+        print(info)
+        talk(info)
+    elif 'joke' in command:
+        talk(pyjokes.get_joke())
+    elif 'go' in command:
+        talk("no, i will not go with you")
+    elif 'mad' in command:
+        talk("no, i am not, you are mad")
+    elif 'how' in command:
+        talk("i am fine, what about u")
+    else:
+        talk("please say the command again")
 
-while True:
-    run_alexa()
+    take_command()
+
+run_alexa()
+
+
 
 
 
